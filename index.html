@@ -266,25 +266,7 @@ const mm = String(todayDate.getMonth()+1).padStart(2,'0');
 const dd = String(todayDate.getDate()).padStart(2,'0');
 document.getElementById('input-date').value = `${yyyy}-${mm}-${dd}`;
 
-let data = {
-  ingredients: [
-    { id:1, name:'薄力粉', unit:'kg', safeStock:5, dailyUse:3.5, leadTime:2, supplier:'〇〇製粉', stock:null },
-    { id:2, name:'牛乳', unit:'L', safeStock:8, dailyUse:6, leadTime:1, supplier:'△△乳業', stock:null },
-    { id:3, name:'卵', unit:'個', safeStock:30, dailyUse:20, leadTime:1, supplier:'△△乳業', stock:null },
-    { id:4, name:'バター', unit:'g', safeStock:500, dailyUse:300, leadTime:2, supplier:'△△乳業', stock:null },
-    { id:5, name:'生クリーム', unit:'mL', safeStock:600, dailyUse:400, leadTime:1, supplier:'△△乳業', stock:null },
-    { id:6, name:'砂糖', unit:'kg', safeStock:3, dailyUse:1.5, leadTime:3, supplier:'〇〇製粉', stock:null },
-    { id:7, name:'いちご', unit:'パック', safeStock:5, dailyUse:4, leadTime:1, supplier:'□□青果', stock:null },
-    { id:8, name:'バナナ', unit:'本', safeStock:20, dailyUse:15, leadTime:1, supplier:'□□青果', stock:null },
-  ],
-  factors: {
-    dow: { 0:1.3, 1:0.8, 2:0.8, 3:0.9, 4:0.9, 5:1.5, 6:1.4 },
-    weather: { sunny:1.1, cloudy:1.0, rainy:0.6, hot:0.85 },
-    season: { 0:0.8, 1:0.8, 2:1.0, 3:1.3, 4:1.2, 5:1.4, 6:1.5, 7:1.5, 8:1.3, 9:1.1, 10:0.9, 11:1.2 },
-    event: { normal:1.0, holiday:1.3, festival:1.4, sale:1.2 }
-  },
-  savedStock: {}
-};
+let data = {"ingredients":[{"id":1,"name":"米粉","unit":"kg","safeStock":3,"dailyUse":0.9,"leadTime":3,"supplier":"なみさとねっと","stock":null},{"id":2,"name":"オートミールパウダー","unit":"個","safeStock":2,"dailyUse":0.6,"leadTime":2,"supplier":"富澤商店","stock":null},{"id":3,"name":"きび砂糖","unit":"kg","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"ヨドバシドットコム","stock":null},{"id":4,"name":"タピオカでんぷん","unit":"袋","safeStock":1,"dailyUse":0.15,"leadTime":3,"supplier":"Amazon","stock":null},{"id":5,"name":"こめ油","unit":"g","safeStock":200,"dailyUse":150,"leadTime":1,"supplier":"リクエ","stock":null},{"id":6,"name":"豆乳","unit":"本","safeStock":3,"dailyUse":3,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと／その他実店舗","stock":null},{"id":7,"name":"豆乳クリーム","unit":"本","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"B&Cパートナー","stock":null},{"id":8,"name":"レモン汁","unit":"本","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと","stock":null},{"id":9,"name":"バナナ","unit":"本","safeStock":10,"dailyUse":20,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":10,"name":"冷凍いちご","unit":"kg","safeStock":1,"dailyUse":0.3,"leadTime":1,"supplier":"リクエ","stock":null},{"id":11,"name":"粒あん","unit":"包","safeStock":2,"dailyUse":1,"leadTime":1,"supplier":"手作り","stock":null},{"id":12,"name":"小豆","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"Amazon／業務スーパー","stock":null},{"id":13,"name":"きな粉","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"業務スーパー","stock":null},{"id":14,"name":"チョコソース","unit":"本","safeStock":2,"dailyUse":0.6,"leadTime":1,"supplier":"リクエ","stock":null},{"id":15,"name":"黒みつ","unit":"本","safeStock":1,"dailyUse":0.4,"leadTime":3,"supplier":"にっぽん津々浦々","stock":null},{"id":16,"name":"バナナチップス","unit":"パック","safeStock":0.3,"dailyUse":0.2,"leadTime":1,"supplier":"文化堂","stock":null},{"id":17,"name":"板チョコ","unit":"枚","safeStock":2,"dailyUse":2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":18,"name":"ミックスナッツ","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.2,"leadTime":3,"supplier":"Amazon","stock":null},{"id":19,"name":"抹茶パウダー","unit":"袋（100g）","safeStock":0.2,"dailyUse":0.07,"leadTime":3,"supplier":"Amazon","stock":null},{"id":20,"name":"わらび餅","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.1,"leadTime":4,"supplier":"Cotta","stock":null},{"id":21,"name":"バター","unit":"個（1個450g）","safeStock":0.5,"dailyUse":0.05,"leadTime":4,"supplier":"Cotta、富澤など","stock":null},{"id":22,"name":"レタス","unit":"個","safeStock":0.3,"dailyUse":0.3,"leadTime":1,"supplier":"八百屋","stock":null},{"id":23,"name":"バンバーグ","unit":"個","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"リクエ","stock":null},{"id":24,"name":"塩コショウ","unit":"g","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":25,"name":"トッピング用きな粉","unit":"袋（kg）","safeStock":0.2,"dailyUse":0.05,"leadTime":2,"supplier":"リクエ、Amazon","stock":null},{"id":26,"name":"バニラアイス","unit":"個","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":27,"name":"苺ソース","unit":"本","safeStock":1,"dailyUse":0.6,"leadTime":3,"supplier":"グリーンビーンズ／Amazon","stock":null},{"id":28,"name":"クレープ包装紙","unit":"枚","safeStock":300,"dailyUse":90,"leadTime":5,"supplier":"ラポール","stock":null},{"id":29,"name":"クレープ包むOPP袋","unit":"袋","safeStock":1,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":30,"name":"レジ袋小","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":31,"name":"レジ袋大","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":32,"name":"スタンプカード","unit":"枚","safeStock":40,"dailyUse":20,"leadTime":5,"supplier":"ラクスル","stock":null}],"factors":{"dow":{"0":2.05,"1":1,"2":1,"3":0.3,"4":0.3,"5":1.1,"6":1.6},"weather":{"sunny":1.1,"cloudy":1.1,"rainy":0.6,"hot":0.7},"season":{"0":1.05,"1":0.95,"2":1.5,"3":1.5,"4":1.4,"5":1.1,"6":0.85,"7":0.7,"8":0.9,"9":1.35,"10":1.2,"11":1.1},"event":{"normal":1,"holiday":1,"festival":1.4,"sale":1.35}},"savedStock":{}};
 
 try {
   const saved = localStorage.getItem('crepe_inventory_data');
@@ -397,21 +379,24 @@ function renderOrder() {
     const needed = ing.dailyUse * factors.total * ing.leadTime;
     const threshold = ing.safeStock + needed;
     const orderQty = Math.max(0, Math.ceil(threshold - stock + ing.dailyUse * factors.total * 1.5));
-    const urgent = stock < ing.safeStock * 0.5;
+    const urgent = stock < ing.safeStock;
     const shouldOrder = stock < threshold;
 
     let badge = '', reason = '';
     if (urgent) {
       badge = '<span class="badge badge-danger">緊急発注</span>';
-      reason = '在庫が安全在庫の50%未満';
+      reason = '安全在庫を下回っています';
       urgentCount++; orderCount++;
     } else if (shouldOrder) {
       badge = '<span class="badge badge-warn">要発注</span>';
-      reason = `${ing.leadTime}日後の補充が必要`;
+      reason = `本日中に発注必須（リードタイム${ing.leadTime}日）`;
       orderCount++;
     } else {
+      const daysUntilOrder = ing.dailyUse * factors.total > 0
+        ? Math.floor((stock - threshold) / (ing.dailyUse * factors.total))
+        : 99;
       badge = '<span class="badge badge-ok">在庫十分</span>';
-      reason = '—';
+      reason = `${daysUntilOrder}日後に発注予定`;
     }
 
     const stockDisplay = ing.stock !== null ? `${stock} ${ing.unit}` : '<span style="color:var(--text-secondary)">未入力</span>';
