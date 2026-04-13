@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>クレープ店 在庫管理システム</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f5f5f2;
+  --bg-info: #e6f1fb;
+  --bg-warn: #faeeda;
+  --bg-danger: #fcebeb;
+  --bg-success: #eaf3de;
+  --text: #1a1a18;
+  --text-secondary: #6b6b67;
+  --text-info: #185fa5;
+  --text-warn: #633806;
+  --text-danger: #791f1f;
+  --text-success: #27500a;
+  --border: rgba(0,0,0,0.12);
+  --border-em: rgba(0,0,0,0.25);
+  --green: #1D9E75;
+  --green-dark: #0F6E56;
+  --radius: 8px;
+  --radius-lg: 12px;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1e1c;
+    --bg-secondary: #282826;
+    --bg-info: #042c53;
+    --bg-warn: #412402;
+    --bg-danger: #501313;
+    --bg-success: #173404;
+    --text: #f0efea;
+    --text-secondary: #a0a09c;
+    --text-info: #85b7eb;
+    --text-warn: #fac775;
+    --text-danger: #f09595;
+    --text-success: #c0dd97;
+    --border: rgba(255,255,255,0.12);
+    --border-em: rgba(255,255,255,0.25);
+  }
+}
+body { background: var(--bg-secondary); color: var(--text); min-height: 100vh; padding: 1rem; }
+.app { max-width: 960px; margin: 0 auto; background: var(--bg-secondary); }
+.app-header { padding: 1.5rem 0 0; }
+.app-header h1 { font-size: 22px; font-weight: 500; }
+.app-header p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+.tab-bar { display: flex; gap: 4px; margin: 1.25rem 0 0; border-bottom: 0.5px solid var(--border); }
+.tab { padding: 8px 18px; font-size: 14px; cursor: pointer; border: none; background: none; color: var(--text-secondary); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.15s; }
+.tab.active { color: var(--text); border-bottom-color: var(--green); font-weight: 500; }
+.section { display: none; padding-top: 1.25rem; }
+.section.active { display: block; }
+.card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.field label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+input, select, textarea {
+  background: var(--bg);
+  color: var(--text);
+  border: 0.5px solid var(--border-em);
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus { border-color: var(--green); }
+input[type=range] { padding: 0; border: none; background: transparent; accent-color: var(--green); }
+button { font-family: inherit; cursor: pointer; }
+.btn { padding: 8px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; border: 0.5px solid var(--border-em); background: transparent; color: var(--text); transition: background 0.15s; }
+.btn:hover { background: var(--bg-secondary); }
+.btn-primary { background: var(--green); color: #fff; border-color: transparent; }
+.btn-primary:hover { background: var(--green-dark); }
+.btn-sm { padding: 3px 9px; font-size: 12px; border-radius: var(--radius); cursor: pointer; border: 0.5px solid var(--border); background: transparent; color: var(--text-secondary); }
+.btn-danger { color: var(--text-danger); border-color: var(--border); }
+h2 { font-size: 16px; font-weight: 500; margin-bottom: 1rem; }
+h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: var(--radius); font-size: 11px; font-weight: 500; }
+.badge-warn { background: var(--bg-warn); color: var(--text-warn); }
+.badge-ok { background: var(--bg-success); color: var(--text-success); }
+.badge-danger { background: var(--bg-danger); color: var(--text-danger); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { text-align: left; padding: 6px 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); }
+.tbl td { padding: 8px 8px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl input { padding: 4px 7px; font-size: 13px; }
+.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.metric { background: var(--bg-secondary); border-radius: var(--radius); padding: 12px; }
+.metric .val { font-size: 22px; font-weight: 500; color: var(--text); }
+.metric .lbl { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.order-amount { font-size: 16px; font-weight: 500; color: var(--text-warn); }
+.note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.factor-box { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.factor-label { font-size: 13px; width: 100px; flex-shrink: 0; color: var(--text); }
+.factor-val { font-size: 13px; font-weight: 500; min-width: 40px; text-align: right; color: var(--text); }
+.alert { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; margin-bottom: 12px; }
+.alert-info { background: var(--bg-info); color: var(--text-info); }
+.alert-warn { background: var(--bg-warn); color: var(--text-warn); }
+.save-msg { font-size: 13px; color: var(--green-dark); display: none; margin-left: 10px; }
+.row-danger td { background: var(--bg-danger); }
+.overflow-x { overflow-x: auto; }
+@media (max-width: 640px) {
+  .row2, .row3 { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: 1fr 1fr; }
+  .tbl { font-size: 12px; }
+  .tbl th, .tbl td { padding: 6px 4px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app-header">
+    <h1>クレープ店 在庫管理システム</h1>
+    <p>バイト → 在庫入力 ／ 店長 → 発注確認</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('input', this)">在庫入力（バイト用）</button>
+    <button class="tab" onclick="showTab('order', this)">発注確認（店長用）</button>
+    <button class="tab" onclick="showTab('settings', this)">食材・設定</button>
+  </div>
+
+  <!-- 在庫入力 -->
+  <div class="section active" id="tab-input">
+    <div class="card">
+      <h3>本日の条件</h3>
+      <div class="row3">
+        <div class="field">
+          <label>日付</label>
+          <input type="date" id="input-date" />
+        </div>
+        <div class="field">
+          <label>天候</label>
+          <select id="input-weather">
+            <option value="sunny">晴れ</option>
+            <option value="cloudy">曇り</option>
+            <option value="rainy">雨</option>
+            <option value="hot">猛暑（35℃+）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>イベント・特記</label>
+          <select id="input-event">
+            <option value="normal">通常</option>
+            <option value="holiday">祝日・連休</option>
+            <option value="festival">近隣イベント</option>
+            <option value="sale">セール・告知あり</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>現在の在庫数量を入力してください</h3>
+      <p class="note" style="margin-bottom:12px;">業務終了後、各食材の残量を入力してください。単位は設定に従います。</p>
+      <div class="overflow-x">
+        <table class="tbl" id="stock-input-table">
+          <thead>
+            <tr>
+              <th>食材名</th>
+              <th>単位</th>
+              <th>現在庫</th>
+              <th>安全在庫</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody id="stock-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:1rem; display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+        <button class="btn btn-primary" onclick="saveStock()">在庫を保存する</button>
+        <span id="save-msg" class="save-msg">保存しました ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 発注確認 -->
+  <div class="section" id="tab-order">
+    <div class="card">
+      <h3>需要予測の補正係数</h3>
+      <div id="factor-display"></div>
+      <p class="note">これらの係数をもとに、明日以降の必要量を計算しています。</p>
+    </div>
+
+    <div class="card">
+      <h3>本日の発注推奨リスト</h3>
+      <div class="alert alert-info" id="order-summary-msg"></div>
+      <div class="overflow-x">
+        <table class="tbl" id="order-table">
+          <thead>
+            <tr>
+              <th>食材名</th>
+              <th>現在庫</th>
+              <th>安全在庫</th>
+              <th>リードタイム</th>
+              <th>推奨発注量</th>
+              <th>発注先</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody id="order-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="metric-grid" id="order-metrics"></div>
+    </div>
+  </div>
+
+  <!-- 設定 -->
+  <div class="section" id="tab-settings">
+    <div class="card">
+      <h3>食材マスタ</h3>
+      <div class="overflow-x">
+        <table class="tbl" id="settings-table">
+          <thead>
+            <tr>
+              <th>食材名</th>
+              <th>単位</th>
+              <th>安全在庫</th>
+              <th>1日平均使用量</th>
+              <th>リードタイム(日)</th>
+              <th>発注先</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="settings-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:1rem;">
+        <button class="btn btn-primary" onclick="addIngredient()">＋ 食材を追加</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>需要補正係数の設定</h3>
+      <p class="note" style="margin-bottom:12px;">各条件で通常の何倍の売上になるか設定します（1.0 = 通常）</p>
+      <div id="factor-settings"></div>
+    </div>
+
+    <div class="card">
+      <h3>データのバックアップ</h3>
+      <p class="note" style="margin-bottom:14px;">食材マスタ・補正係数・在庫データをまとめてJSONファイルに書き出せます。機種変更や別デバイスへの引き継ぎ、バックアップにご利用ください。</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary" onclick="exportData()">データをエクスポート（JSONで保存）</button>
+        <button class="btn" onclick="document.getElementById('import-file').click()">バックアップから読み込む</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)" />
+      </div>
+      <p class="note" style="margin-top:10px;">※ 読み込むと現在のデータはすべて上書きされます。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const todayDate = new Date();
+const yyyy = todayDate.getFullYear();
+const mm = String(todayDate.getMonth()+1).padStart(2,'0');
+const dd = String(todayDate.getDate()).padStart(2,'0');
+document.getElementById('input-date').value = `${yyyy}-${mm}-${dd}`;
+
+let data = {
+  ingredients: [
+    { id:1, name:'薄力粉', unit:'kg', safeStock:5, dailyUse:3.5, leadTime:2, supplier:'〇〇製粉', stock:null },
+    { id:2, name:'牛乳', unit:'L', safeStock:8, dailyUse:6, leadTime:1, supplier:'△△乳業', stock:null },
+    { id:3, name:'卵', unit:'個', safeStock:30, dailyUse:20, leadTime:1, supplier:'△△乳業', stock:null },
+    { id:4, name:'バター', unit:'g', safeStock:500, dailyUse:300, leadTime:2, supplier:'△△乳業', stock:null },
+    { id:5, name:'生クリーム', unit:'mL', safeStock:600, dailyUse:400, leadTime:1, supplier:'△△乳業', stock:null },
+    { id:6, name:'砂糖', unit:'kg', safeStock:3, dailyUse:1.5, leadTime:3, supplier:'〇〇製粉', stock:null },
+    { id:7, name:'いちご', unit:'パック', safeStock:5, dailyUse:4, leadTime:1, supplier:'□□青果', stock:null },
+    { id:8, name:'バナナ', unit:'本', safeStock:20, dailyUse:15, leadTime:1, supplier:'□□青果', stock:null },
+  ],
+  factors: {
+    dow: { 0:1.3, 1:0.8, 2:0.8, 3:0.9, 4:0.9, 5:1.5, 6:1.4 },
+    weather: { sunny:1.1, cloudy:1.0, rainy:0.6, hot:0.85 },
+    season: { 0:0.8, 1:0.8, 2:1.0, 3:1.3, 4:1.2, 5:1.4, 6:1.5, 7:1.5, 8:1.3, 9:1.1, 10:0.9, 11:1.2 },
+    event: { normal:1.0, holiday:1.3, festival:1.4, sale:1.2 }
+  },
+  savedStock: {}
+};
+
+try {
+  const saved = localStorage.getItem('crepe_inventory_data');
+  if (saved) data = JSON.parse(saved);
+} catch(e) {}
+
+function save() {
+  try { localStorage.setItem('crepe_inventory_data', JSON.stringify(data)); } catch(e) {}
+}
+
+function showTab(t, el) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  el.classList.add('active');
+  if (t === 'order') renderOrder();
+  if (t === 'settings') renderSettings();
+  if (t === 'input') renderStockInput();
+}
+
+function getDemandFactor(weather, event) {
+  const date = new Date(document.getElementById('input-date').value || new Date());
+  const dow = date.getDay();
+  const month = date.getMonth();
+  const wf = data.factors.weather[weather] || 1.0;
+  const df = data.factors.dow[dow] || 1.0;
+  const sf = data.factors.season[month] || 1.0;
+  const ef = data.factors.event[event] || 1.0;
+  return { wf, df, sf, ef, total: wf * df * sf * ef };
+}
+
+function renderStockInput() {
+  const tbody = document.getElementById('stock-tbody');
+  tbody.innerHTML = '';
+  data.ingredients.forEach(ing => {
+    const cur = ing.stock !== null ? ing.stock : '';
+    let status = '';
+    if (ing.stock !== null) {
+      if (ing.stock < ing.safeStock * 0.5) status = '<span class="badge badge-danger">緊急</span>';
+      else if (ing.stock < ing.safeStock) status = '<span class="badge badge-warn">少ない</span>';
+      else status = '<span class="badge badge-ok">OK</span>';
+    }
+    tbody.innerHTML += `<tr>
+      <td style="font-weight:500">${ing.name}</td>
+      <td style="color:var(--text-secondary)">${ing.unit}</td>
+      <td><input type="number" min="0" step="0.1" value="${cur}" style="width:90px" onchange="updateStock(${ing.id}, this.value)" /></td>
+      <td style="color:var(--text-secondary)">${ing.safeStock} ${ing.unit}</td>
+      <td id="status-${ing.id}">${status}</td>
+    </tr>`;
+  });
+}
+
+function updateStock(id, val) {
+  const ing = data.ingredients.find(i => i.id === id);
+  if (ing) {
+    ing.stock = parseFloat(val) || 0;
+    save();
+    const status = document.getElementById('status-' + id);
+    if (ing.stock < ing.safeStock * 0.5) status.innerHTML = '<span class="badge badge-danger">緊急</span>';
+    else if (ing.stock < ing.safeStock) status.innerHTML = '<span class="badge badge-warn">少ない</span>';
+    else status.innerHTML = '<span class="badge badge-ok">OK</span>';
+  }
+}
+
+function saveStock() {
+  const date = document.getElementById('input-date').value;
+  const weather = document.getElementById('input-weather').value;
+  const event = document.getElementById('input-event').value;
+  data.savedStock = { date, weather, event };
+  save();
+  const msg = document.getElementById('save-msg');
+  msg.style.display = 'inline';
+  setTimeout(() => msg.style.display = 'none', 2500);
+}
+
+function renderOrder() {
+  const weather = data.savedStock.weather || document.getElementById('input-weather').value;
+  const event = data.savedStock.event || document.getElementById('input-event').value;
+  const factors = getDemandFactor(weather, event);
+
+  const factorDiv = document.getElementById('factor-display');
+  const rows = [
+    ['曜日補正', factors.df],
+    ['天候補正', factors.wf],
+    ['季節補正', factors.sf],
+    ['イベント補正', factors.ef],
+  ];
+  let fhtml = '<div class="row3">';
+  rows.forEach(([label, val]) => {
+    fhtml += `<div class="factor-box">
+      <span class="factor-label">${label}</span>
+      <input type="range" min="0.3" max="2.5" step="0.05" value="${val.toFixed(2)}" disabled style="flex:1" />
+      <span class="factor-val">${val.toFixed(2)}×</span>
+    </div>`;
+  });
+  fhtml += `<div class="factor-box">
+    <span class="factor-label" style="font-weight:500">総合係数</span>
+    <input type="range" min="0.2" max="3" step="0.05" value="${Math.min(factors.total,3).toFixed(2)}" disabled style="flex:1" />
+    <span class="factor-val" style="color:var(--green);font-weight:500">${factors.total.toFixed(2)}×</span>
+  </div>`;
+  fhtml += '</div>';
+  factorDiv.innerHTML = fhtml;
+
+  const tbody = document.getElementById('order-tbody');
+  tbody.innerHTML = '';
+  let urgentCount = 0, orderCount = 0;
+
+  data.ingredients.forEach(ing => {
+    const stock = ing.stock !== null ? ing.stock : ing.safeStock * 1.5;
+    const needed = ing.dailyUse * factors.total * ing.leadTime;
+    const threshold = ing.safeStock + needed;
+    const orderQty = Math.max(0, Math.ceil(threshold - stock + ing.dailyUse * factors.total * 1.5));
+    const urgent = stock < ing.safeStock * 0.5;
+    const shouldOrder = stock < threshold;
+
+    let badge = '', reason = '';
+    if (urgent) {
+      badge = '<span class="badge badge-danger">緊急発注</span>';
+      reason = '在庫が安全在庫の50%未満';
+      urgentCount++; orderCount++;
+    } else if (shouldOrder) {
+      badge = '<span class="badge badge-warn">要発注</span>';
+      reason = `${ing.leadTime}日後の補充が必要`;
+      orderCount++;
+    } else {
+      badge = '<span class="badge badge-ok">在庫十分</span>';
+      reason = '—';
+    }
+
+    const stockDisplay = ing.stock !== null ? `${stock} ${ing.unit}` : '<span style="color:var(--text-secondary)">未入力</span>';
+    const orderCell = shouldOrder
+      ? `<span class="order-amount">${orderQty} ${ing.unit}</span>`
+      : `<span style="color:var(--text-secondary)">—</span>`;
+
+    const rowClass = urgent ? 'class="row-danger"' : '';
+    tbody.innerHTML += `<tr ${rowClass}>
+      <td style="font-weight:500">${ing.name}</td>
+      <td>${stockDisplay}</td>
+      <td style="color:var(--text-secondary)">${ing.safeStock} ${ing.unit}</td>
+      <td style="color:var(--text-secondary)">${ing.leadTime}日</td>
+      <td>${orderCell}</td>
+      <td style="color:var(--text-secondary);font-size:12px">${ing.supplier || '—'}</td>
+      <td>${badge}<br><span class="note">${reason}</span></td>
+    </tr>`;
+  });
+
+  const msgEl = document.getElementById('order-summary-msg');
+  if (urgentCount > 0) {
+    msgEl.className = 'alert alert-warn';
+    msgEl.textContent = `本日は ${orderCount} 品目の発注が必要です（うち ${urgentCount} 品目が緊急）。`;
+  } else if (orderCount > 0) {
+    msgEl.className = 'alert alert-info';
+    msgEl.textContent = `本日は ${orderCount} 品目の発注が必要です。`;
+  } else {
+    msgEl.className = 'alert alert-info';
+    msgEl.textContent = '本日は発注不要です。すべての在庫が十分です。';
+  }
+
+  document.getElementById('order-metrics').innerHTML = `
+    <div class="metric"><div class="val">${orderCount}</div><div class="lbl">発注品目数</div></div>
+    <div class="metric"><div class="val" style="color:var(--text-danger)">${urgentCount}</div><div class="lbl">緊急品目数</div></div>
+    <div class="metric"><div class="val">${factors.total.toFixed(2)}×</div><div class="lbl">本日の需要係数</div></div>
+  `;
+}
+
+function renderSettings() {
+  const tbody = document.getElementById('settings-tbody');
+  tbody.innerHTML = '';
+  data.ingredients.forEach(ing => {
+    tbody.innerHTML += `<tr>
+      <td><input type="text" value="${ing.name}" style="width:80px" onchange="updateIng(${ing.id},'name',this.value)" /></td>
+      <td><input type="text" value="${ing.unit}" style="width:44px" onchange="updateIng(${ing.id},'unit',this.value)" /></td>
+      <td><input type="number" value="${ing.safeStock}" step="0.1" style="width:72px" onchange="updateIng(${ing.id},'safeStock',parseFloat(this.value))" /></td>
+      <td><input type="number" value="${ing.dailyUse}" step="0.1" style="width:72px" onchange="updateIng(${ing.id},'dailyUse',parseFloat(this.value))" /></td>
+      <td><input type="number" value="${ing.leadTime}" min="1" max="14" style="width:52px" onchange="updateIng(${ing.id},'leadTime',parseInt(this.value))" /></td>
+      <td><input type="text" value="${ing.supplier}" style="width:100px" onchange="updateIng(${ing.id},'supplier',this.value)" /></td>
+      <td><button class="btn-sm btn-danger" onclick="removeIng(${ing.id})">削除</button></td>
+    </tr>`;
+  });
+
+  const factorEl = document.getElementById('factor-settings');
+  const dowNames = ['日','月','火','水','木','金','土'];
+  const weatherNames = { sunny:'晴れ', cloudy:'曇り', rainy:'雨', hot:'猛暑' };
+  const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const eventNames = { normal:'通常', holiday:'祝日', festival:'イベント', sale:'セール' };
+
+  let html = '<h3 style="font-size:13px;margin-bottom:8px;">曜日</h3><div class="row3">';
+  for (let i = 0; i < 7; i++) {
+    html += `<div class="factor-box"><span class="factor-label">${dowNames[i]}曜日</span>
+      <input type="range" min="0.3" max="2.5" step="0.05" value="${data.factors.dow[i]}" style="flex:1"
+        oninput="data.factors.dow[${i}]=parseFloat(this.value);this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)+'×';save()" />
+      <span class="factor-val">${data.factors.dow[i].toFixed(2)}×</span></div>`;
+  }
+  html += '</div>';
+
+  html += '<h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">天候</h3><div class="row2">';
+  for (const [k, label] of Object.entries(weatherNames)) {
+    html += `<div class="factor-box"><span class="factor-label">${label}</span>
+      <input type="range" min="0.3" max="2" step="0.05" value="${data.factors.weather[k]}" style="flex:1"
+        oninput="data.factors.weather['${k}']=parseFloat(this.value);this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)+'×';save()" />
+      <span class="factor-val">${data.factors.weather[k].toFixed(2)}×</span></div>`;
+  }
+  html += '</div>';
+
+  html += '<h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">月別（季節）</h3><div class="row3">';
+  for (let i = 0; i < 12; i++) {
+    html += `<div class="factor-box"><span class="factor-label">${monthNames[i]}</span>
+      <input type="range" min="0.3" max="2.5" step="0.05" value="${data.factors.season[i]}" style="flex:1"
+        oninput="data.factors.season[${i}]=parseFloat(this.value);this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)+'×';save()" />
+      <span class="factor-val">${data.factors.season[i].toFixed(2)}×</span></div>`;
+  }
+  html += '</div>';
+
+  html += '<h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">イベント</h3><div class="row2">';
+  for (const [k, label] of Object.entries(eventNames)) {
+    html += `<div class="factor-box"><span class="factor-label">${label}</span>
+      <input type="range" min="0.3" max="2.5" step="0.05" value="${data.factors.event[k]}" style="flex:1"
+        oninput="data.factors.event['${k}']=parseFloat(this.value);this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)+'×';save()" />
+      <span class="factor-val">${data.factors.event[k].toFixed(2)}×</span></div>`;
+  }
+  html += '</div>';
+  factorEl.innerHTML = html;
+}
+
+function updateIng(id, key, val) {
+  const ing = data.ingredients.find(i => i.id === id);
+  if (ing) { ing[key] = val; save(); }
+}
+
+function removeIng(id) {
+  if (!confirm('この食材を削除しますか？')) return;
+  data.ingredients = data.ingredients.filter(i => i.id !== id);
+  save(); renderSettings();
+}
+
+function addIngredient() {
+  const newId = data.ingredients.length > 0 ? Math.max(...data.ingredients.map(i => i.id)) + 1 : 1;
+  data.ingredients.push({ id: newId, name: '新しい食材', unit: 'g', safeStock: 100, dailyUse: 50, leadTime: 1, supplier: '', stock: null });
+  save(); renderSettings();
+}
+
+function exportData() {
+  const date = document.getElementById('input-date').value || `${yyyy}-${mm}-${dd}`;
+  const filename = `crepe_inventory_${date}.json`;
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!confirm('現在のデータをすべて上書きします。よろしいですか？')) {
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!imported.ingredients || !imported.factors) throw new Error('形式が違います');
+      data = imported;
+      save();
+      renderSettings();
+      renderStockInput();
+      alert('読み込みが完了しました。');
+    } catch(err) {
+      alert('読み込みに失敗しました。正しいバックアップファイルか確認してください。');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+renderStockInput();
+</script>
+</body>
+</html>
