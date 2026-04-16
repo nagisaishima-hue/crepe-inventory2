@@ -25,7 +25,7 @@
   }
 }
 body { background: var(--bg-secondary); color: var(--text); min-height: 100vh; padding: 1rem; }
-.app { max-width: 960px; margin: 0 auto; }
+.app { max-width: 980px; margin: 0 auto; }
 .app-header { padding: 1.5rem 0 0; }
 .app-header h1 { font-size: 22px; font-weight: 500; }
 .app-header p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
@@ -37,10 +37,12 @@ body { background: var(--bg-secondary); color: var(--text); min-height: 100vh; p
 .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
 .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
 .field label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
 input, select { background: var(--bg); color: var(--text); border: 0.5px solid var(--border-em); border-radius: var(--radius); padding: 7px 10px; font-size: 14px; width: 100%; outline: none; font-family: inherit; transition: border-color 0.15s; }
 input:focus, select:focus { border-color: var(--green); }
 input[type=range] { padding: 0; border: none; background: transparent; accent-color: var(--green); }
+input[type=checkbox] { width: auto; accent-color: var(--green); }
 button { font-family: inherit; cursor: pointer; }
 .btn { padding: 8px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; border: 0.5px solid var(--border-em); background: transparent; color: var(--text); transition: background 0.15s; }
 .btn:hover { background: var(--bg-secondary); }
@@ -49,44 +51,55 @@ button { font-family: inherit; cursor: pointer; }
 .btn-sm { padding: 3px 9px; font-size: 12px; border-radius: var(--radius); cursor: pointer; border: 0.5px solid var(--border); background: transparent; color: var(--text-secondary); }
 .btn-danger { color: var(--text-danger); }
 h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: var(--radius); font-size: 11px; font-weight: 500; }
+.badge { display: inline-block; padding: 3px 9px; border-radius: var(--radius); font-size: 11px; font-weight: 500; white-space: nowrap; }
 .badge-warn { background: var(--bg-warn); color: var(--text-warn); }
 .badge-ok { background: var(--bg-success); color: var(--text-success); }
 .badge-danger { background: var(--bg-danger); color: var(--text-danger); }
 .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tbl th { text-align: left; padding: 6px 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); }
+.tbl th { text-align: left; padding: 6px 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); white-space: nowrap; }
 .tbl td { padding: 8px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
 .tbl tr:last-child td { border-bottom: none; }
-.tbl input { padding: 4px 7px; font-size: 13px; }
-.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.metric { background: var(--bg-secondary); border-radius: var(--radius); padding: 12px; }
-.metric .val { font-size: 22px; font-weight: 500; }
-.metric .lbl { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
-.order-amount { font-size: 16px; font-weight: 500; color: var(--text-warn); }
+.tbl input[type=number], .tbl input[type=text] { padding: 4px 7px; font-size: 13px; }
+.tbl tr.row-danger td { background: var(--bg-danger); }
+.tbl tr.row-warn td { background: var(--bg-warn); }
 .note { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.factor-box { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.factor-label { font-size: 13px; width: 120px; flex-shrink: 0; }
-.factor-val { font-size: 13px; font-weight: 500; min-width: 40px; text-align: right; }
 .alert { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; margin-bottom: 12px; }
 .alert-info { background: var(--bg-info); color: var(--text-info); }
 .alert-warn { background: var(--bg-warn); color: var(--text-warn); }
+.metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1rem; }
+.metric { background: var(--bg-secondary); border-radius: var(--radius); padding: 12px; }
+.metric .val { font-size: 22px; font-weight: 500; }
+.metric .lbl { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.factor-box { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.factor-label { font-size: 13px; width: 110px; flex-shrink: 0; }
+.factor-val { font-size: 13px; font-weight: 500; min-width: 40px; text-align: right; }
 .save-msg { font-size: 13px; color: var(--green-dark); display: none; margin-left: 10px; }
-.row-danger td { background: var(--bg-danger); }
 .overflow-x { overflow-x: auto; }
+/* 天気 */
 .weather-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .weather-day { background: var(--bg-secondary); border-radius: var(--radius); padding: 8px 10px; text-align: center; min-width: 68px; font-size: 12px; }
 .weather-day.today { border: 1.5px solid var(--green); }
+.weather-day.holiday-day { opacity: 0.45; }
 .wd-date { color: var(--text-secondary); font-size: 11px; }
 .wd-icon { font-size: 18px; margin: 3px 0; }
 .wd-label { font-weight: 500; font-size: 11px; }
 .wd-sub { color: var(--text-secondary); font-size: 11px; margin-top: 2px; }
 .wd-factor { font-size: 12px; font-weight: 500; color: var(--green); margin-top: 3px; }
-.weather-loading { font-size: 13px; color: var(--text-secondary); padding: 6px 0; }
+.wd-closed { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+/* 休業日 */
+.dow-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 12px; }
+.dow-box { background: var(--bg-secondary); border-radius: var(--radius); padding: 10px 6px; text-align: center; }
+.dow-box label { font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+.dow-box.closed-day { background: var(--bg-danger); }
+.holiday-list { display: flex; flex-direction: column; gap: 8px; }
+.holiday-item { display: flex; align-items: center; gap: 10px; }
+.holiday-item input[type=date] { flex: 1; }
 @media (max-width: 640px) {
-  .row2, .row3 { grid-template-columns: 1fr; }
+  .row2, .row3, .row4 { grid-template-columns: 1fr 1fr; }
   .metric-grid { grid-template-columns: 1fr 1fr; }
   .tbl { font-size: 12px; }
   .tbl th, .tbl td { padding: 5px 4px; }
+  .dow-grid { grid-template-columns: repeat(7, 1fr); gap: 4px; }
 }
 </style>
 </head>
@@ -94,30 +107,30 @@ h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
 <div class="app">
   <div class="app-header">
     <h1>クレープ店 在庫管理システム</h1>
-    <p>バイト → 在庫入力 ／ 店長 → 発注確認</p>
+    <p>品川区豊町 ／ 天気予報連動</p>
   </div>
   <div class="tab-bar">
-    <button class="tab active" onclick="showTab('input',this)">在庫入力（バイト用）</button>
-    <button class="tab" onclick="showTab('order',this)">発注確認（店長用）</button>
+    <button class="tab active" onclick="showTab('main',this)">在庫・発注</button>
+    <button class="tab" onclick="showTab('holidays',this)">休業日設定</button>
     <button class="tab" onclick="showTab('settings',this)">食材・設定</button>
   </div>
 
-  <!-- 在庫入力 -->
-  <div class="section active" id="tab-input">
+  <!-- メインタブ -->
+  <div class="section active" id="tab-main">
     <div class="card">
       <h3>本日の条件</h3>
       <div class="row3">
-        <div class="field"><label>日付</label><input type="date" id="input-date" /></div>
+        <div class="field"><label>日付</label><input type="date" id="input-date" onchange="refreshMain()" /></div>
         <div class="field">
           <label>天候（自動取得）</label>
-          <select id="input-weather">
+          <select id="input-weather" onchange="refreshMain()">
             <option value="sunny">取得中...</option>
           </select>
           <div id="weather-today-note" class="note" style="margin-top:4px;"></div>
         </div>
         <div class="field">
           <label>イベント・特記</label>
-          <select id="input-event">
+          <select id="input-event" onchange="refreshMain()">
             <option value="normal">通常</option>
             <option value="holiday">祝日・連休</option>
             <option value="festival">近隣イベント</option>
@@ -126,47 +139,57 @@ h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
         </div>
       </div>
     </div>
+
     <div class="card">
-      <h3>現在の在庫数量を入力してください</h3>
-      <p class="note" style="margin-bottom:12px;">業務終了後、各食材の残量を入力してください。</p>
+      <h3>今後7日間の天気予報（品川区豊町）</h3>
+      <div id="weather-strip"><p class="note">天気データを取得中...</p></div>
+    </div>
+
+    <div class="metric-grid" id="main-metrics"></div>
+
+    <div class="alert alert-info" id="main-alert"></div>
+
+    <div class="card">
       <div class="overflow-x">
         <table class="tbl">
-          <thead><tr><th>食材名</th><th>単位</th><th>現在庫</th><th>安全在庫</th><th>状態</th></tr></thead>
-          <tbody id="stock-tbody"></tbody>
+          <thead>
+            <tr>
+              <th>食材名</th>
+              <th>現在庫</th>
+              <th>単位</th>
+              <th>状態</th>
+              <th>発注タイミング</th>
+              <th>発注先</th>
+            </tr>
+          </thead>
+          <tbody id="main-tbody"></tbody>
         </table>
       </div>
       <div style="margin-top:1rem;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
-        <button class="btn btn-primary" onclick="saveStock()">在庫を保存する</button>
+        <button class="btn btn-primary" onclick="saveAll()">保存する</button>
         <span id="save-msg" class="save-msg">保存しました ✓</span>
       </div>
     </div>
   </div>
 
-  <!-- 発注確認 -->
-  <div class="section" id="tab-order">
+  <!-- 休業日設定 -->
+  <div class="section" id="tab-holidays">
     <div class="card">
-      <h3>今後7日間の天気予報（品川区豊町）</h3>
-      <div id="weather-strip"><p class="weather-loading">天気データを取得中...</p></div>
-      <p class="note">各食材のリードタイム期間中の天気予報を平均した係数で発注量を計算しています。</p>
+      <h3>定休日（毎週）</h3>
+      <p class="note" style="margin-bottom:12px;">定休日は在庫の使用量が0として計算されます。</p>
+      <div class="dow-grid" id="dow-grid"></div>
     </div>
     <div class="card">
-      <h3>需要予測の補正係数（本日）</h3>
-      <div id="factor-display"></div>
-    </div>
-    <div class="card">
-      <h3>本日の発注推奨リスト</h3>
-      <div class="alert alert-info" id="order-summary-msg"></div>
-      <div class="overflow-x">
-        <table class="tbl">
-          <thead><tr><th>食材名</th><th>現在庫</th><th>安全在庫</th><th>リードタイム</th><th>推奨発注量</th><th>発注先</th><th>状態</th></tr></thead>
-          <tbody id="order-tbody"></tbody>
-        </table>
+      <h3>臨時休業日</h3>
+      <p class="note" style="margin-bottom:12px;">特定の日付を臨時休業日として追加できます。</p>
+      <div class="holiday-list" id="holiday-list"></div>
+      <div style="margin-top:10px;">
+        <button class="btn btn-primary" onclick="addHoliday()">＋ 日付を追加</button>
       </div>
     </div>
-    <div class="card"><div class="metric-grid" id="order-metrics"></div></div>
   </div>
 
-  <!-- 設定 -->
+  <!-- 食材・設定 -->
   <div class="section" id="tab-settings">
     <div class="card">
       <h3>食材マスタ</h3>
@@ -185,9 +208,9 @@ h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
     </div>
     <div class="card">
       <h3>データのバックアップ</h3>
-      <p class="note" style="margin-bottom:14px;">食材マスタ・補正係数・在庫データをまとめてJSONファイルに書き出せます。</p>
+      <p class="note" style="margin-bottom:14px;">全データをJSONファイルに書き出せます。</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-        <button class="btn btn-primary" onclick="exportData()">データをエクスポート（JSONで保存）</button>
+        <button class="btn btn-primary" onclick="exportData()">エクスポート（JSONで保存）</button>
         <button class="btn" onclick="document.getElementById('import-file').click()">バックアップから読み込む</button>
         <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)" />
       </div>
@@ -206,85 +229,127 @@ document.getElementById('input-date').value = `${yyyy}-${mm}-${dd}`;
 
 let weatherForecast = [];
 
-let data = {"ingredients":[{"id":1,"name":"米粉","unit":"kg","safeStock":3,"dailyUse":0.9,"leadTime":3,"supplier":"なみさとねっと","stock":4},{"id":2,"name":"オートミールパウダー","unit":"個","safeStock":2,"dailyUse":0.6,"leadTime":2,"supplier":"富澤商店","stock":4},{"id":3,"name":"きび砂糖","unit":"kg","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"ヨドバシドットコム","stock":null},{"id":4,"name":"タピオカでんぷん","unit":"袋","safeStock":1,"dailyUse":0.15,"leadTime":3,"supplier":"Amazon","stock":null},{"id":5,"name":"こめ油","unit":"g","safeStock":200,"dailyUse":150,"leadTime":1,"supplier":"リクエ","stock":null},{"id":6,"name":"豆乳","unit":"本","safeStock":3,"dailyUse":3,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと／その他実店舗","stock":null},{"id":7,"name":"豆乳クリーム","unit":"本","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"B&Cパートナー","stock":null},{"id":8,"name":"レモン汁","unit":"本","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと","stock":null},{"id":9,"name":"バナナ","unit":"本","safeStock":10,"dailyUse":20,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":10,"name":"冷凍いちご","unit":"kg","safeStock":1,"dailyUse":0.3,"leadTime":1,"supplier":"リクエ","stock":null},{"id":11,"name":"粒あん","unit":"包","safeStock":2,"dailyUse":1,"leadTime":1,"supplier":"手作り","stock":null},{"id":12,"name":"小豆","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"Amazon／業務スーパー","stock":null},{"id":13,"name":"きな粉","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"業務スーパー","stock":null},{"id":14,"name":"チョコソース","unit":"本","safeStock":2,"dailyUse":0.6,"leadTime":1,"supplier":"リクエ","stock":null},{"id":15,"name":"黒みつ","unit":"本","safeStock":1,"dailyUse":0.4,"leadTime":3,"supplier":"にっぽん津々浦々","stock":null},{"id":16,"name":"バナナチップス","unit":"パック","safeStock":0.3,"dailyUse":0.2,"leadTime":1,"supplier":"文化堂","stock":null},{"id":17,"name":"板チョコ","unit":"枚","safeStock":2,"dailyUse":2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":18,"name":"ミックスナッツ","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.2,"leadTime":3,"supplier":"Amazon","stock":null},{"id":19,"name":"抹茶パウダー","unit":"袋（100g）","safeStock":0.2,"dailyUse":0.07,"leadTime":3,"supplier":"Amazon","stock":null},{"id":20,"name":"わらび餅","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.1,"leadTime":4,"supplier":"Cotta","stock":null},{"id":21,"name":"バター","unit":"個（1個450g）","safeStock":0.5,"dailyUse":0.05,"leadTime":4,"supplier":"Cotta、富澤など","stock":null},{"id":22,"name":"レタス","unit":"個","safeStock":0.3,"dailyUse":0.3,"leadTime":1,"supplier":"八百屋","stock":null},{"id":23,"name":"バンバーグ","unit":"個","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"リクエ","stock":null},{"id":24,"name":"塩コショウ","unit":"g","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":25,"name":"トッピング用きな粉","unit":"袋（kg）","safeStock":0.2,"dailyUse":0.05,"leadTime":2,"supplier":"リクエ、Amazon","stock":null},{"id":26,"name":"バニラアイス","unit":"個","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":27,"name":"苺ソース","unit":"本","safeStock":1,"dailyUse":0.6,"leadTime":3,"supplier":"グリーンビーンズ／Amazon","stock":null},{"id":28,"name":"クレープ包装紙","unit":"枚","safeStock":300,"dailyUse":90,"leadTime":5,"supplier":"ラポール","stock":null},{"id":29,"name":"クレープ包むOPP袋","unit":"袋","safeStock":1,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":30,"name":"レジ袋小","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":31,"name":"レジ袋大","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":32,"name":"スタンプカード","unit":"枚","safeStock":40,"dailyUse":20,"leadTime":5,"supplier":"ラクスル","stock":null}],"factors":{"dow":{"0":2.05,"1":1,"2":1,"3":0.3,"4":0.3,"5":1.1,"6":1.6},"weather":{"sunny":1.1,"rainy":0.6,"windy":0.8,"hot":0.7},"season":{"0":1.05,"1":0.95,"2":1.5,"3":1.5,"4":1.4,"5":1.1,"6":0.85,"7":0.7,"8":0.9,"9":1.35,"10":1.2,"11":1.1},"event":{"normal":1,"holiday":1,"festival":1.4,"sale":1.35}},"savedStock":{}};
+let data = {
+  ingredients: [{"id":1,"name":"米粉","unit":"kg","safeStock":3,"dailyUse":0.9,"leadTime":3,"supplier":"なみさとねっと","stock":4},{"id":2,"name":"オートミールパウダー","unit":"個","safeStock":2,"dailyUse":0.6,"leadTime":2,"supplier":"富澤商店","stock":4},{"id":3,"name":"きび砂糖","unit":"kg","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"ヨドバシドットコム","stock":null},{"id":4,"name":"タピオカでんぷん","unit":"袋","safeStock":1,"dailyUse":0.15,"leadTime":3,"supplier":"Amazon","stock":null},{"id":5,"name":"こめ油","unit":"g","safeStock":200,"dailyUse":150,"leadTime":1,"supplier":"リクエ","stock":null},{"id":6,"name":"豆乳","unit":"本","safeStock":3,"dailyUse":3,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと／その他実店舗","stock":null},{"id":7,"name":"豆乳クリーム","unit":"本","safeStock":5,"dailyUse":3,"leadTime":3,"supplier":"B&Cパートナー","stock":null},{"id":8,"name":"レモン汁","unit":"本","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ／まいばすけっと","stock":null},{"id":9,"name":"バナナ","unit":"本","safeStock":10,"dailyUse":20,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":10,"name":"冷凍いちご","unit":"kg","safeStock":1,"dailyUse":0.3,"leadTime":1,"supplier":"リクエ","stock":null},{"id":11,"name":"粒あん","unit":"包","safeStock":2,"dailyUse":1,"leadTime":1,"supplier":"手作り","stock":null},{"id":12,"name":"小豆","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"Amazon／業務スーパー","stock":null},{"id":13,"name":"きな粉","unit":"袋（kg）","safeStock":0.3,"dailyUse":0.1,"leadTime":2,"supplier":"業務スーパー","stock":null},{"id":14,"name":"チョコソース","unit":"本","safeStock":2,"dailyUse":0.6,"leadTime":1,"supplier":"リクエ","stock":null},{"id":15,"name":"黒みつ","unit":"本","safeStock":1,"dailyUse":0.4,"leadTime":3,"supplier":"にっぽん津々浦々","stock":null},{"id":16,"name":"バナナチップス","unit":"パック","safeStock":0.3,"dailyUse":0.2,"leadTime":1,"supplier":"文化堂","stock":null},{"id":17,"name":"板チョコ","unit":"枚","safeStock":2,"dailyUse":2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":18,"name":"ミックスナッツ","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.2,"leadTime":3,"supplier":"Amazon","stock":null},{"id":19,"name":"抹茶パウダー","unit":"袋（100g）","safeStock":0.2,"dailyUse":0.07,"leadTime":3,"supplier":"Amazon","stock":null},{"id":20,"name":"わらび餅","unit":"袋（kg）","safeStock":0.5,"dailyUse":0.1,"leadTime":4,"supplier":"Cotta","stock":null},{"id":21,"name":"バター","unit":"個（1個450g）","safeStock":0.5,"dailyUse":0.05,"leadTime":4,"supplier":"Cotta、富澤など","stock":null},{"id":22,"name":"レタス","unit":"個","safeStock":0.3,"dailyUse":0.3,"leadTime":1,"supplier":"八百屋","stock":null},{"id":23,"name":"バンバーグ","unit":"個","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"リクエ","stock":null},{"id":24,"name":"塩コショウ","unit":"g","safeStock":10,"dailyUse":2,"leadTime":1,"supplier":"まいばすけっと、スーパーなど","stock":null},{"id":25,"name":"トッピング用きな粉","unit":"袋（kg）","safeStock":0.2,"dailyUse":0.05,"leadTime":2,"supplier":"リクエ、Amazon","stock":null},{"id":26,"name":"バニラアイス","unit":"個","safeStock":0.5,"dailyUse":0.2,"leadTime":2,"supplier":"グリーンビーンズ","stock":null},{"id":27,"name":"苺ソース","unit":"本","safeStock":1,"dailyUse":0.6,"leadTime":3,"supplier":"グリーンビーンズ／Amazon","stock":null},{"id":28,"name":"クレープ包装紙","unit":"枚","safeStock":300,"dailyUse":90,"leadTime":5,"supplier":"ラポール","stock":null},{"id":29,"name":"クレープ包むOPP袋","unit":"袋","safeStock":1,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":30,"name":"レジ袋小","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":31,"name":"レジ袋大","unit":"袋","safeStock":2,"dailyUse":0.3,"leadTime":3,"supplier":"モノタロウ","stock":null},{"id":32,"name":"スタンプカード","unit":"枚","safeStock":40,"dailyUse":20,"leadTime":5,"supplier":"ラクスル","stock":null}],
+  factors: {"dow":{"0":2.05,"1":1,"2":1,"3":0.3,"4":0.3,"5":1.1,"6":1.6},"weather":{"sunny":1.1,"rainy":0.6,"windy":0.8,"hot":0.7},"season":{"0":1.05,"1":0.95,"2":1.5,"3":1.5,"4":1.4,"5":1.1,"6":0.85,"7":0.7,"8":0.9,"9":1.35,"10":1.2,"11":1.1},"event":{"normal":1,"holiday":1,"festival":1.4,"sale":1.35}},
+  closedDow: [],        // 定休曜日 [0=日,1=月,...,6=土]
+  closedDates: [],      // 臨時休業日 ["2026-05-01", ...]
+  savedStock: {}
+};
 
 try { const s = localStorage.getItem('crepe_inventory_data'); if (s) data = JSON.parse(s); } catch(e) {}
+if (!data.closedDow) data.closedDow = [];
+if (!data.closedDates) data.closedDates = [];
 
 function save() { try { localStorage.setItem('crepe_inventory_data', JSON.stringify(data)); } catch(e) {} }
 
-// --- 天気 ---
-function wmoToType(code, windSpeed, tempMax) {
-  if (tempMax >= 35) return 'hot';
-  if (windSpeed >= 7) return 'windy';
-  if ([51,53,55,61,63,65,71,73,75,77,80,81,82,85,86,95,96,99].includes(code)) return 'rainy';
-  return 'sunny';
+// --- 休業日判定 ---
+function isClosedDate(dateStr) {
+  const dt = new Date(dateStr + 'T00:00:00');
+  if (data.closedDow.includes(dt.getDay())) return true;
+  if (data.closedDates.includes(dateStr)) return true;
+  return false;
 }
+
+// dateStr から n 日後の YYYY-MM-DD を返す
+function addDays(dateStr, n) {
+  const dt = new Date(dateStr + 'T00:00:00');
+  dt.setDate(dt.getDate() + n);
+  return dt.toISOString().slice(0, 10);
+}
+
+// リードタイム期間（明日〜n日後）の実営業日数を返す
+function openDaysInLeadTime(baseDateStr, leadTime) {
+  let count = 0;
+  for (let i = 1; i <= leadTime; i++) {
+    if (!isClosedDate(addDays(baseDateStr, i))) count++;
+  }
+  return count;
+}
+
+// --- 天気 ---
 const wTypeLabel = { sunny:'晴れ・曇り', rainy:'雨', windy:'強風', hot:'猛暑' };
 const wTypeIcon  = { sunny:'☀️', rainy:'🌧️', windy:'💨', hot:'🔥' };
 function wFactor(type) { return data.factors.weather[type] ?? 1.0; }
+
+function wmoToType(code, wind, tempMax) {
+  if (tempMax >= 35) return 'hot';
+  if (wind >= 7) return 'windy';
+  if ([51,53,55,61,63,65,71,73,75,77,80,81,82,85,86,95,96,99].includes(code)) return 'rainy';
+  return 'sunny';
+}
 
 async function fetchWeather() {
   try {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}&daily=weathercode,windspeed_10m_max,temperature_2m_max&timezone=Asia%2FTokyo&forecast_days=7`;
     const res = await fetch(url);
     const j = await res.json();
-    weatherForecast = j.daily.time.map((date, i) => {
-      const type = wmoToType(j.daily.weathercode[i], j.daily.windspeed_10m_max[i], j.daily.temperature_2m_max[i]);
-      return { date, type, wind: Math.round(j.daily.windspeed_10m_max[i]), tempMax: Math.round(j.daily.temperature_2m_max[i]) };
-    });
-    applyTodayWeather();
-    renderWeatherStrip();
-  } catch(e) {
-    document.getElementById('weather-strip').innerHTML = '<p class="weather-loading">天気の取得に失敗しました。手動で設定してください。</p>';
+    weatherForecast = j.daily.time.map((date, i) => ({
+      date,
+      type: wmoToType(j.daily.weathercode[i], j.daily.windspeed_10m_max[i], j.daily.temperature_2m_max[i]),
+      wind: Math.round(j.daily.windspeed_10m_max[i]),
+      tempMax: Math.round(j.daily.temperature_2m_max[i])
+    }));
+    // 今日の天気をセレクトに反映
+    const t = weatherForecast[0];
     const sel = document.getElementById('input-weather');
     sel.innerHTML = '<option value="sunny">晴れ・曇り</option><option value="rainy">雨</option><option value="windy">強風（7m/s以上）</option><option value="hot">猛暑（35℃+）</option>';
+    sel.value = t.type;
+    document.getElementById('weather-today-note').textContent =
+      `自動取得 ${wTypeIcon[t.type]} ${wTypeLabel[t.type]}　最高${t.tempMax}℃　風速${t.wind}m/s`;
+    refreshMain();
+  } catch(e) {
+    const sel = document.getElementById('input-weather');
+    sel.innerHTML = '<option value="sunny">晴れ・曇り</option><option value="rainy">雨</option><option value="windy">強風（7m/s以上）</option><option value="hot">猛暑（35℃+）</option>';
+    document.getElementById('weather-strip').innerHTML = '<p class="note">天気の取得に失敗しました。手動で設定してください。</p>';
+    refreshMain();
   }
 }
 
-function applyTodayWeather() {
-  if (!weatherForecast.length) return;
-  const t = weatherForecast[0];
-  const sel = document.getElementById('input-weather');
-  sel.innerHTML = '<option value="sunny">晴れ・曇り</option><option value="rainy">雨</option><option value="windy">強風（7m/s以上）</option><option value="hot">猛暑（35℃+）</option>';
-  sel.value = t.type;
-  document.getElementById('weather-today-note').textContent =
-    `自動取得 ${wTypeIcon[t.type]} ${wTypeLabel[t.type]}　最高${t.tempMax}℃　風速${t.wind}m/s`;
-}
-
-function renderWeatherStrip() {
+function renderWeatherStrip(baseDateStr) {
   if (!weatherForecast.length) return;
   const dow = ['日','月','火','水','木','金','土'];
   document.getElementById('weather-strip').innerHTML = weatherForecast.map((d, i) => {
     const dt = new Date(d.date + 'T00:00:00');
     const label = i === 0 ? '今日' : i === 1 ? '明日' : `${dt.getMonth()+1}/${dt.getDate()}`;
-    const dayLabel = dow[dt.getDay()];
-    const f = wFactor(d.type);
-    return `<div class="weather-day${i===0?' today':''}">
-      <div class="wd-date">${label}(${dayLabel})</div>
+    const closed = isClosedDate(d.date);
+    const f = closed ? 0 : wFactor(d.type);
+    return `<div class="weather-day${i===0?' today':''}${closed?' holiday-day':''}">
+      <div class="wd-date">${label}(${dow[dt.getDay()]})</div>
       <div class="wd-icon">${wTypeIcon[d.type]}</div>
       <div class="wd-label">${wTypeLabel[d.type]}</div>
       <div class="wd-sub">${d.tempMax}℃ 風${d.wind}m/s</div>
-      <div class="wd-factor">${f.toFixed(2)}×</div>
+      ${closed
+        ? '<div class="wd-closed">休業日</div>'
+        : `<div class="wd-factor">${f.toFixed(2)}×</div>`}
     </div>`;
   }).join('');
 }
 
-// リードタイム期間（明日から n 日）の平均天気係数
-function leadTimeWeatherFactor(leadTime) {
+// リードタイム期間の平均天気係数（休業日は0、その分需要も低い）
+function leadTimeWeatherFactor(baseDateStr, leadTime) {
+  if (!weatherForecast.length) {
+    return wFactor(document.getElementById('input-weather').value || 'sunny');
+  }
   const days = weatherForecast.slice(1, 1 + leadTime);
   if (!days.length) return wFactor(document.getElementById('input-weather').value || 'sunny');
-  return days.reduce((s, d) => s + wFactor(d.type), 0) / days.length;
+  const total = days.reduce((s, d) => {
+    const closed = isClosedDate(d.date);
+    return s + (closed ? 0 : wFactor(d.type));
+  }, 0);
+  return total / days.length;
 }
 
-function getTodayWeatherFactor() {
+function getTodayWeatherFactor(baseDateStr) {
+  if (isClosedDate(baseDateStr)) return 0;
   if (weatherForecast.length) return wFactor(weatherForecast[0].type);
   return wFactor(document.getElementById('input-weather').value || 'sunny');
 }
 
-function getDemandFactors(weatherFactor) {
-  const date = new Date(document.getElementById('input-date').value || new Date());
-  const df = data.factors.dow[date.getDay()] || 1.0;
-  const sf = data.factors.season[date.getMonth()] || 1.0;
+function getDemandFactors(baseDateStr, weatherFactor) {
+  const dt = new Date(baseDateStr + 'T00:00:00');
+  const df = data.factors.dow[dt.getDay()] || 1.0;
+  const sf = data.factors.season[dt.getMonth()] || 1.0;
   const ef = data.factors.event[document.getElementById('input-event').value] || 1.0;
   return { wf: weatherFactor, df, sf, ef, total: weatherFactor * df * sf * ef };
 }
@@ -295,123 +360,156 @@ function showTab(t, el) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('tab-' + t).classList.add('active');
   el.classList.add('active');
-  if (t === 'order') renderOrder();
+  if (t === 'main') refreshMain();
+  if (t === 'holidays') renderHolidays();
   if (t === 'settings') renderSettings();
-  if (t === 'input') renderStockInput();
 }
 
-// --- 在庫入力 ---
-function renderStockInput() {
-  const tbody = document.getElementById('stock-tbody');
+// --- メイン ---
+function refreshMain() {
+  const baseDateStr = document.getElementById('input-date').value || `${yyyy}-${mm}-${dd}`;
+  renderWeatherStrip(baseDateStr);
+
+  const todayWf = getTodayWeatherFactor(baseDateStr);
+  const todayF = getDemandFactors(baseDateStr, todayWf);
+  const isTodayClosed = isClosedDate(baseDateStr);
+
+  const tbody = document.getElementById('main-tbody');
   tbody.innerHTML = '';
+  let urgentCount = 0, orderCount = 0;
+
   data.ingredients.forEach(ing => {
-    const cur = ing.stock !== null ? ing.stock : '';
-    let status = '';
-    if (ing.stock !== null) {
-      if (ing.stock < ing.safeStock * 0.5) status = '<span class="badge badge-danger">緊急</span>';
-      else if (ing.stock < ing.safeStock) status = '<span class="badge badge-warn">少ない</span>';
-      else status = '<span class="badge badge-ok">OK</span>';
+    const stock = ing.stock !== null ? ing.stock : null;
+
+    // リードタイム期間の実営業日数 × 係数で必要量を算出
+    const ltWf = leadTimeWeatherFactor(baseDateStr, ing.leadTime);
+    const ltF = getDemandFactors(baseDateStr, ltWf);
+    const openDays = openDaysInLeadTime(baseDateStr, ing.leadTime);
+    const needed = ing.dailyUse * ltF.total * openDays;
+    const threshold = ing.safeStock + needed;
+
+    let badge = '', timing = '', rowClass = '';
+
+    if (stock === null) {
+      badge = '<span class="badge" style="background:var(--bg-secondary);color:var(--text-secondary)">未入力</span>';
+      timing = '—';
+    } else if (stock < ing.safeStock) {
+      badge = '<span class="badge badge-danger">緊急発注</span>';
+      timing = '本日中に発注必須（安全在庫を下回っています）';
+      rowClass = 'row-danger';
+      urgentCount++; orderCount++;
+    } else if (stock < threshold) {
+      badge = '<span class="badge badge-warn">要発注</span>';
+      timing = `本日中に発注必須（リードタイム${ing.leadTime}日）`;
+      rowClass = 'row-warn';
+      orderCount++;
+    } else {
+      // 何日後に発注ラインを下回るか計算
+      const dailyConsumption = ing.dailyUse * ltF.total;
+      const daysUntilOrder = dailyConsumption > 0
+        ? Math.floor((stock - threshold) / dailyConsumption)
+        : 99;
+      badge = '<span class="badge badge-ok">OK</span>';
+      timing = `${daysUntilOrder}日後に発注予定`;
     }
-    tbody.innerHTML += `<tr>
+
+    const stockInput = `<input type="number" min="0" step="0.1" value="${stock !== null ? stock : ''}" placeholder="入力" style="width:85px" onchange="updateStock(${ing.id},this.value)" />`;
+
+    tbody.innerHTML += `<tr class="${rowClass}">
       <td style="font-weight:500">${ing.name}</td>
+      <td>${stockInput}</td>
       <td style="color:var(--text-secondary)">${ing.unit}</td>
-      <td><input type="number" min="0" step="0.1" value="${cur}" style="width:90px" onchange="updateStock(${ing.id},this.value)" /></td>
-      <td style="color:var(--text-secondary)">${ing.safeStock} ${ing.unit}</td>
-      <td id="status-${ing.id}">${status}</td>
+      <td id="badge-${ing.id}">${badge}</td>
+      <td id="timing-${ing.id}" class="note" style="font-size:12px;color:var(--text-secondary)">${timing}</td>
+      <td style="color:var(--text-secondary);font-size:12px">${ing.supplier || '—'}</td>
     </tr>`;
   });
+
+  // メトリクス
+  document.getElementById('main-metrics').innerHTML = `
+    <div class="metric"><div class="val">${orderCount}</div><div class="lbl">発注品目数</div></div>
+    <div class="metric"><div class="val" style="color:var(--text-danger)">${urgentCount}</div><div class="lbl">緊急品目数</div></div>
+    <div class="metric"><div class="val">${isTodayClosed ? '休業日' : todayF.total.toFixed(2)+'×'}</div><div class="lbl">本日の需要係数</div></div>`;
+
+  // アラート
+  const alertEl = document.getElementById('main-alert');
+  if (isTodayClosed) {
+    alertEl.className = 'alert alert-info'; alertEl.textContent = '本日は休業日です。在庫は消費されません。';
+  } else if (urgentCount > 0) {
+    alertEl.className = 'alert alert-warn'; alertEl.textContent = `${orderCount} 品目の発注が必要です（うち ${urgentCount} 品目が緊急）。`;
+  } else if (orderCount > 0) {
+    alertEl.className = 'alert alert-info'; alertEl.textContent = `${orderCount} 品目の発注が必要です。`;
+  } else {
+    alertEl.className = 'alert alert-info'; alertEl.textContent = '本日は発注不要です。すべての在庫が十分です。';
+  }
 }
 
 function updateStock(id, val) {
   const ing = data.ingredients.find(i => i.id === id);
   if (!ing) return;
-  ing.stock = parseFloat(val) || 0;
+  ing.stock = val === '' ? null : (parseFloat(val) || 0);
   save();
-  const el = document.getElementById('status-' + id);
-  if (ing.stock < ing.safeStock * 0.5) el.innerHTML = '<span class="badge badge-danger">緊急</span>';
-  else if (ing.stock < ing.safeStock) el.innerHTML = '<span class="badge badge-warn">少ない</span>';
-  else el.innerHTML = '<span class="badge badge-ok">OK</span>';
+  refreshMain();
 }
 
-function saveStock() {
+function saveAll() {
   save();
   const msg = document.getElementById('save-msg');
   msg.style.display = 'inline';
   setTimeout(() => msg.style.display = 'none', 2500);
 }
 
-// --- 発注確認 ---
-function renderOrder() {
-  renderWeatherStrip();
-  const todayF = getDemandFactors(getTodayWeatherFactor());
+// --- 休業日 ---
+function renderHolidays() {
+  const dowNames = ['日','月','火','水','木','金','土'];
+  document.getElementById('dow-grid').innerHTML = dowNames.map((name, i) => {
+    const checked = data.closedDow.includes(i);
+    return `<div class="dow-box${checked?' closed-day':''}">
+      <label>
+        <input type="checkbox" ${checked?'checked':''} onchange="toggleClosedDow(${i},this.checked)" />
+        ${name}曜
+      </label>
+    </div>`;
+  }).join('');
 
-  let fhtml = '<div class="row3">';
-  [['曜日補正', todayF.df], ['天候補正（今日）', todayF.wf], ['季節補正', todayF.sf], ['イベント補正', todayF.ef]].forEach(([label, val]) => {
-    fhtml += `<div class="factor-box"><span class="factor-label">${label}</span>
-      <input type="range" min="0.3" max="2.5" step="0.05" value="${Math.min(val,2.5).toFixed(2)}" disabled style="flex:1" />
-      <span class="factor-val">${val.toFixed(2)}×</span></div>`;
-  });
-  fhtml += `<div class="factor-box"><span class="factor-label" style="font-weight:500">総合係数</span>
-    <input type="range" min="0.2" max="3" step="0.05" value="${Math.min(todayF.total,3).toFixed(2)}" disabled style="flex:1" />
-    <span class="factor-val" style="color:var(--green);font-weight:500">${todayF.total.toFixed(2)}×</span></div>`;
-  fhtml += '</div>';
-  document.getElementById('factor-display').innerHTML = fhtml;
+  renderHolidayList();
+}
 
-  const tbody = document.getElementById('order-tbody');
-  tbody.innerHTML = '';
-  let urgentCount = 0, orderCount = 0;
+function toggleClosedDow(dow, checked) {
+  if (checked) { if (!data.closedDow.includes(dow)) data.closedDow.push(dow); }
+  else { data.closedDow = data.closedDow.filter(d => d !== dow); }
+  save();
+  renderHolidays();
+  refreshMain();
+}
 
-  data.ingredients.forEach(ing => {
-    const stock = ing.stock !== null ? ing.stock : ing.safeStock * 1.5;
-    // リードタイム期間の天気予報を反映した係数
-    const ltWf = leadTimeWeatherFactor(ing.leadTime);
-    const ltF = getDemandFactors(ltWf);
-    const needed = ing.dailyUse * ltF.total * ing.leadTime;
-    const threshold = ing.safeStock + needed;
-    const orderQty = Math.max(0, Math.ceil(threshold - stock + ing.dailyUse * ltF.total * 1.5));
-    const urgent = stock < ing.safeStock;
-    const shouldOrder = stock < threshold;
+function renderHolidayList() {
+  const list = document.getElementById('holiday-list');
+  if (!data.closedDates.length) {
+    list.innerHTML = '<p class="note">臨時休業日はありません。</p>';
+    return;
+  }
+  list.innerHTML = data.closedDates.sort().map((date, i) => `
+    <div class="holiday-item">
+      <input type="date" value="${date}" onchange="updateHoliday(${i},this.value)" style="max-width:180px" />
+      <button class="btn-sm btn-danger" onclick="removeHoliday(${i})">削除</button>
+    </div>`).join('');
+}
 
-    let badge = '', reason = '';
-    if (urgent) {
-      badge = '<span class="badge badge-danger">緊急発注</span>';
-      reason = '安全在庫を下回っています';
-      urgentCount++; orderCount++;
-    } else if (shouldOrder) {
-      badge = '<span class="badge badge-warn">要発注</span>';
-      reason = `本日中に発注必須（リードタイム${ing.leadTime}日）`;
-      orderCount++;
-    } else {
-      const daysUntilOrder = ing.dailyUse * ltF.total > 0
-        ? Math.floor((stock - threshold) / (ing.dailyUse * ltF.total)) : 99;
-      badge = '<span class="badge badge-ok">在庫十分</span>';
-      reason = `${daysUntilOrder}日後に発注予定`;
-    }
+function addHoliday() {
+  const today = `${yyyy}-${mm}-${dd}`;
+  data.closedDates.push(today);
+  save(); renderHolidays(); refreshMain();
+}
 
-    const ltNote = weatherForecast.length > 1 ? `予報係数 ${ltWf.toFixed(2)}×` : '';
-    const stockDisplay = ing.stock !== null ? `${stock} ${ing.unit}` : '<span style="color:var(--text-secondary)">未入力</span>';
-    const orderCell = shouldOrder ? `<span class="order-amount">${orderQty} ${ing.unit}</span>` : '<span style="color:var(--text-secondary)">—</span>';
+function updateHoliday(i, val) {
+  data.closedDates[i] = val;
+  save(); renderHolidays(); refreshMain();
+}
 
-    tbody.innerHTML += `<tr ${urgent ? 'class="row-danger"' : ''}>
-      <td style="font-weight:500">${ing.name}</td>
-      <td>${stockDisplay}</td>
-      <td style="color:var(--text-secondary)">${ing.safeStock} ${ing.unit}</td>
-      <td style="color:var(--text-secondary)">${ing.leadTime}日<br><span class="note">${ltNote}</span></td>
-      <td>${orderCell}</td>
-      <td style="color:var(--text-secondary);font-size:12px">${ing.supplier || '—'}</td>
-      <td>${badge}<br><span class="note">${reason}</span></td>
-    </tr>`;
-  });
-
-  const msgEl = document.getElementById('order-summary-msg');
-  if (urgentCount > 0) { msgEl.className = 'alert alert-warn'; msgEl.textContent = `本日は ${orderCount} 品目の発注が必要です（うち ${urgentCount} 品目が緊急）。`; }
-  else if (orderCount > 0) { msgEl.className = 'alert alert-info'; msgEl.textContent = `本日は ${orderCount} 品目の発注が必要です。`; }
-  else { msgEl.className = 'alert alert-info'; msgEl.textContent = '本日は発注不要です。すべての在庫が十分です。'; }
-
-  document.getElementById('order-metrics').innerHTML = `
-    <div class="metric"><div class="val">${orderCount}</div><div class="lbl">発注品目数</div></div>
-    <div class="metric"><div class="val" style="color:var(--text-danger)">${urgentCount}</div><div class="lbl">緊急品目数</div></div>
-    <div class="metric"><div class="val">${todayF.total.toFixed(2)}×</div><div class="lbl">本日の需要係数</div></div>`;
+function removeHoliday(i) {
+  data.closedDates.splice(i, 1);
+  save(); renderHolidays(); refreshMain();
 }
 
 // --- 設定 ---
@@ -419,9 +517,9 @@ function renderSettings() {
   document.getElementById('settings-tbody').innerHTML = data.ingredients.map(ing => `<tr>
     <td><input type="text" value="${ing.name}" style="width:80px" onchange="updateIng(${ing.id},'name',this.value)" /></td>
     <td><input type="text" value="${ing.unit}" style="width:44px" onchange="updateIng(${ing.id},'unit',this.value)" /></td>
-    <td><input type="number" value="${ing.safeStock}" step="0.1" style="width:72px" onchange="updateIng(${ing.id},'safeStock',parseFloat(this.value))" /></td>
-    <td><input type="number" value="${ing.dailyUse}" step="0.1" style="width:72px" onchange="updateIng(${ing.id},'dailyUse',parseFloat(this.value))" /></td>
-    <td><input type="number" value="${ing.leadTime}" min="1" max="14" style="width:52px" onchange="updateIng(${ing.id},'leadTime',parseInt(this.value))" /></td>
+    <td><input type="number" value="${ing.safeStock}" step="0.1" style="width:68px" onchange="updateIng(${ing.id},'safeStock',parseFloat(this.value))" /></td>
+    <td><input type="number" value="${ing.dailyUse}" step="0.1" style="width:68px" onchange="updateIng(${ing.id},'dailyUse',parseFloat(this.value))" /></td>
+    <td><input type="number" value="${ing.leadTime}" min="1" max="14" style="width:50px" onchange="updateIng(${ing.id},'leadTime',parseInt(this.value))" /></td>
     <td><input type="text" value="${ing.supplier}" style="width:100px" onchange="updateIng(${ing.id},'supplier',this.value)" /></td>
     <td><button class="btn-sm btn-danger" onclick="removeIng(${ing.id})">削除</button></td>
   </tr>`).join('');
@@ -434,11 +532,11 @@ function renderSettings() {
   let html = '<h3 style="font-size:13px;margin-bottom:8px;">曜日</h3><div class="row3">';
   for (let i=0;i<7;i++) html += slider(`data.factors.dow[${i}]`, dow[i]+'曜日', data.factors.dow[i], 0.3, 2.5);
   html += '</div><h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">天候</h3><div class="row2">';
-  for (const [k,label] of Object.entries(weatherNames)) html += slider(`data.factors.weather['${k}']`, label, data.factors.weather[k]||1, 0.3, 2);
+  for (const [k,l] of Object.entries(weatherNames)) html += slider(`data.factors.weather['${k}']`, l, data.factors.weather[k]||1, 0.3, 2);
   html += '</div><h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">月別（季節）</h3><div class="row3">';
   for (let i=0;i<12;i++) html += slider(`data.factors.season[${i}]`, months[i], data.factors.season[i], 0.3, 2.5);
   html += '</div><h3 style="font-size:13px;margin-bottom:8px;margin-top:14px;">イベント</h3><div class="row2">';
-  for (const [k,label] of Object.entries(eventNames)) html += slider(`data.factors.event['${k}']`, label, data.factors.event[k]||1, 0.3, 2.5);
+  for (const [k,l] of Object.entries(eventNames)) html += slider(`data.factors.event['${k}']`, l, data.factors.event[k]||1, 0.3, 2.5);
   html += '</div>';
   document.getElementById('factor-settings').innerHTML = html;
 }
@@ -466,7 +564,7 @@ function addIngredient() {
 }
 function exportData() {
   const date = document.getElementById('input-date').value || `${yyyy}-${mm}-${dd}`;
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href=url; a.download=`crepe_inventory_${date}.json`; a.click();
   URL.revokeObjectURL(url);
@@ -477,17 +575,21 @@ function importData(input) {
   const reader = new FileReader();
   reader.onload = e => {
     try {
-      const imported = JSON.parse(e.target.result);
-      if (!imported.ingredients || !imported.factors) throw new Error();
-      data = imported; save(); renderSettings(); renderStockInput();
+      const imp = JSON.parse(e.target.result);
+      if (!imp.ingredients || !imp.factors) throw new Error();
+      data = imp;
+      if (!data.closedDow) data.closedDow = [];
+      if (!data.closedDates) data.closedDates = [];
+      save(); renderSettings(); refreshMain();
       alert('読み込みが完了しました。');
-    } catch { alert('読み込みに失敗しました。正しいバックアップファイルか確認してください。'); }
+    } catch { alert('読み込みに失敗しました。'); }
     input.value = '';
   };
   reader.readAsText(file);
 }
 
-renderStockInput();
+// 起動
+refreshMain();
 fetchWeather();
 </script>
 </body>
